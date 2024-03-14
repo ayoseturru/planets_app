@@ -5,6 +5,7 @@ import {ThemeContext} from "../../providers/ThemeProvider";
 import Grid from "../../utils/Grid";
 import {TranslationsContext} from "../../providers/TranslationProvider";
 import {RouterPaths} from "../pages/Main";
+import MediaQueryUtils from "../../utils/MediaQuery";
 
 interface NavProps {
     extraStyle: StyleDeclarationValue;
@@ -16,10 +17,10 @@ const Nav = ({extraStyle}: NavProps) => {
         translations = useContext(TranslationsContext),
         styles = StyleSheet.create({
             verticalNavContainer: {
-                ...Grid.define("max-content max-content max-content", "minmax(auto, 226px)"),
+                ...Grid.define("max-content max-content max-content", "auto"),
                 backgroundColor: theme.nav.background,
                 color: theme.nav.textActive,
-                fontSize: 22,
+                width: "auto",
                 display: "grid",
                 height: "auto"
             },
@@ -27,7 +28,12 @@ const Nav = ({extraStyle}: NavProps) => {
                 padding: "16px 24px",
                 fontSize: 22,
                 fontWeight: 800,
-                margin: 0
+                margin: 0,
+                ...MediaQueryUtils.mobile(
+                    {
+                        fontSize: 14
+                    }
+                )
             },
             navItem: {
                 padding: "16px 24px",
@@ -41,9 +47,13 @@ const Nav = ({extraStyle}: NavProps) => {
                 },
                 ':focus': {
                     outline: 'none',
-                    backgroundColor: theme.nav.backgroundActive,
-                    border: `1px solid ${theme.nav.textActive}`
-                }
+                    textDecoration: "underline"
+                },
+                ...MediaQueryUtils.mobile(
+                    {
+                        fontSize: 12
+                    }
+                )
             }
         });
 

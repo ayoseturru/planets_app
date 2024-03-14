@@ -1,18 +1,36 @@
 {
   "normal": {
+    "app": {
+      "background": "#FFFFFF"
+    },
     "nav": {
       "background": "#154064",
       "backgroundActive": "#1C5686",
       "text": "#F5F5F5",
       "textActive": "#E0E0E0"
+    },
+    "table": {
+      "text": "#333333",
+      "thBorder": "#EBEBEB",
+      "thText": "#828282",
+      "tdBorder": "#828282"
     }
   },
   "dark": {
+    "app": {
+      "background": "#FFFFFF"
+    },
     "nav": {
       "background": "#154064",
       "backgroundActive": "#1C5686",
       "text": "#F5F5F5",
       "textActive": "#E0E0E0"
+    },
+    "table": {
+      "text": "#333333",
+      "thBorder": "#EBEBEB",
+      "thText": "#828282",
+      "tdBorder": "#828282"
     }
   }
 }

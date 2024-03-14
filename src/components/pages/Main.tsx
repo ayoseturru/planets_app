@@ -7,6 +7,7 @@ import {css, StyleSheet} from "aphrodite";
 import Grid from "../../utils/Grid";
 import Nav from "../nav/Nav";
 import Favorites from "./favorites/Favorites";
+import {ThemeContext} from "../../providers/ThemeProvider";
 
 type PageLinks = {
     Planets: string;
@@ -19,14 +20,16 @@ export const RouterPaths: PageLinks = {
 };
 
 const Main = () => {
-    const styles = StyleSheet.create({
-        main: {
-            ...Grid.define("auto", "max-content auto"),
-            height: "100vh"
-        },
-        nav: Grid.setRowCol(1, 1),
-        pageContent: Grid.setRowCol(1, 2)
-    });
+    const {theme} = useContext(ThemeContext),
+        styles = StyleSheet.create({
+            main: {
+                ...Grid.define("auto", "minmax(auto, 226px) auto"),
+                backgroundColor: theme.app.background,
+                height: "100vh"
+            },
+            nav: Grid.setRowCol(1, 1),
+            pageContent: Grid.setRowCol(1, 2)
+        });
 
     // Apparently, react-router-dom >= 6.0.0 does not allow HOC call inside the Route. It must be defined sadly outside.
     const PlanetsPage = withDocumentTitle(Planets, useContext(TranslationsContext).getMessage('planetsPage')),
