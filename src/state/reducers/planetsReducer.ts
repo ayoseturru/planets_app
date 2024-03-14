@@ -1,13 +1,15 @@
-import InitialState, {PlanetsAppState} from "./initialState";
+import InitialState, {PlanetsDataState} from "./initialState";
 import PlanetsActions from "../actions/planets.actions";
+import {PlanetsCollection} from "../../models/PlanetsCollection";
 
 export interface PlanetsActionType {
     type: keyof typeof PlanetsActions;
-    planets?: typeof InitialState.planets;
-    planetId?: string;
+    planets?: PlanetsCollection;
+    planetId?: number;
+    ttl?: typeof InitialState.planetsData.ttl;
 }
 
-const PlanetsReducer = (state: PlanetsAppState = InitialState, action: PlanetsActionType): PlanetsAppState => {
+const PlanetsReducer = (state: PlanetsDataState = InitialState.planetsData, action: PlanetsActionType): PlanetsDataState => {
     switch (action.type) {
         case PlanetsActions.SET_PLANETS:
             return {

@@ -4,14 +4,21 @@ import {TranslationsProvider} from "./providers/TranslationProvider";
 import Main from "./components/pages/Main";
 import {Provider} from "react-redux";
 import store from "./state/store/store";
+import {PlanetsService} from "./services/PlanetsService";
+import PlanetsServiceFactory from "./services/PlanetsServiceFactory";
+import RestPlanetsService from "./services/RestPlanetsService";
 
-const App = () => {
+interface AppProps {
+    planetsService?: PlanetsService
+}
+
+const App = ({planetsService}: AppProps) => {
     return (
         <React.StrictMode>
             <Provider store={store}>
                 <TranslationsProvider>
                     <ThemeProvider>
-                        <Main/>
+                        <Main planetsService={planetsService || PlanetsServiceFactory.getService(typeof RestPlanetsService, "https://swapi.dev/api/planets/")}/>
                     </ThemeProvider>
                 </TranslationsProvider>
             </Provider>

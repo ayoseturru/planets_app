@@ -1,18 +1,18 @@
 import React, {useContext} from 'react';
 import {css, StyleSheet} from 'aphrodite';
-import Planet from "../../models/Planet";
 import {TranslationsContext} from "../../providers/TranslationProvider";
 import {ThemeContext} from "../../providers/ThemeProvider";
 import MediaQueryUtils from "../../utils/MediaQuery";
+import {useSelector} from "react-redux";
+import {PlanetsAppState} from "../../state/reducers/initialState";
+import {PlanetsCollection} from "../../models/PlanetsCollection";
 import FavoriteIcon from "../favoriteIcon/FavoriteIcon";
-
-const planets: Planet[] = [
-    {name: 'Earth', climate: 'Temperate', diameter: 12742, population: 7800000000},
-    {name: 'Mars', climate: 'Arid', diameter: 6787, population: 0}
-];
+import FavoritesCollection from "../../models/FavoritesCollection";
 
 const PlanetsTable = () => {
     const translations = useContext(TranslationsContext),
+        planets: PlanetsCollection = useSelector((state: PlanetsAppState) => state.planetsData.planets),
+        favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
         {theme} = useContext(ThemeContext),
         styles = StyleSheet.create({
             table: {
@@ -20,11 +20,7 @@ const PlanetsTable = () => {
                 fontSize: 14,
                 borderCollapse: 'collapse',
                 width: '100%',
-                ...MediaQueryUtils.mobile(
-                    {
-                        fontSize: 12
-                    }
-                )
+                ...MediaQueryUtils.mobile({fontSize: 12})
             },
             th: {
                 color: theme.table.thText,
@@ -33,40 +29,22 @@ const PlanetsTable = () => {
                 borderTop: `1px solid ${theme.table.thBorder}`,
                 textAlign: 'left',
                 padding: "9px 0 9px 24px",
-                ...MediaQueryUtils.mobile(
-                    {
-                        padding: "6px 0 6px 12px"
-                    }
-                )
+                ...MediaQueryUtils.mobile({padding: "6px 0 6px 12px"})
             },
             td: {
                 borderTop: `0.25px solid ${theme.table.tdBorder}`,
                 borderBottom: `0.25px solid ${theme.table.tdBorder}`,
                 padding: "19px 0 19px 24px",
-                ...MediaQueryUtils.mobile(
-                    {
-                        padding: "8px 0 19px 12px"
-                    }
-                )
+                ...MediaQueryUtils.mobile({padding: "8px 0 19px 12px"})
             },
             title: {
                 fontSize: 18,
                 fontWeight: 400,
                 margin: 0,
                 padding: 13,
-                ...MediaQueryUtils.mobile(
-                    {
-                        padding: 6
-                    }
-                )
+                ...MediaQueryUtils.mobile({padding: 6})
             },
-            favorite: {
-                ...MediaQueryUtils.mobile(
-                    {
-                        display: "none"
-                    }
-                )
-            }
+            favorite: MediaQueryUtils.mobile({display: "none"})
         });
 
     return (
@@ -83,17 +61,19 @@ const PlanetsTable = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {planets.map((planet, index) => (
-                    <tr key={planet.name}>
-                        <td className={css(styles.td)}><b>{planet.name}</b></td>
-                        <td className={css(styles.td)}>{planet.climate}</td>
-                        <td className={css(styles.td)}>{planet.diameter}</td>
-                        <td className={css(styles.td)}>{planet.population}</td>
-                        <td className={css(styles.td, styles.favorite)}>
-                            <FavoriteIcon filled={true}/>
-                        </td>
-                    </tr>
-                ))}
+                {Object.entries(planets).map(([planetKey, planet]) => {
+                    return (
+                        <tr key={planetKey}>
+                            <td className={css(styles.td)}><b>{`${planet.name}`}</b></td>
+                            <td className={css(styles.td)}>{`${planet.climate}`}</td>
+                            <td className={css(styles.td)}>{`${planet.diameter}`}</td>
+                            <td className={css(styles.td)}>{`${planet.population}`}</td>
+                            <td className={css(styles.td, styles.favorite)}>
+                                <FavoriteIcon filled={favorites[parseInt(planetKey)]}/>
+                            </td>
+                        </tr>
+                    );
+                })}
                 </tbody>
             </table>
         </div>

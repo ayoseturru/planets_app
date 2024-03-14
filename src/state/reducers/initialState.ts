@@ -1,13 +1,22 @@
-import Planet from "../../models/Planet";
+import {PlanetsCollection} from "../../models/PlanetsCollection";
+import FavoritesCollection from "../../models/FavoritesCollection";
+
+export type PlanetsDataState = {
+    planets: PlanetsCollection;
+    favorites: FavoritesCollection;
+    ttl: number;
+};
 
 export interface PlanetsAppState {
-    planets: Map<string, Planet>;
-    favourites: Map<string, boolean>;
+    planetsData: PlanetsDataState;
 }
 
 const initialState: PlanetsAppState = {
-    planets: new Map<string, Planet>(),
-    favourites: new Map<string, boolean>()
+    planetsData: {
+        planets: {},
+        ttl: 0,
+        favorites: {}
+    }
 };
 
 export default initialState;

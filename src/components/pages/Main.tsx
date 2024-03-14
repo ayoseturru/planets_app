@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import withDocumentTitle from './withDocumentTitle';
 import Planets from "./planets/Planets";
@@ -8,6 +8,10 @@ import Grid from "../../utils/Grid";
 import Nav from "../nav/Nav";
 import Favorites from "./favorites/Favorites";
 import {ThemeContext} from "../../providers/ThemeProvider";
+import {PlanetsService, PlanetsServiceResponse} from "../../services/PlanetsService";
+import Logger from "../../utils/Logger";
+import {useDispatch} from "react-redux";
+import PlanetsCreator from "../../state/creators/planets.creator";
 
 type PageLinks = {
     Planets: string;
@@ -19,8 +23,13 @@ export const RouterPaths: PageLinks = {
     Favorites: "/favorites"
 };
 
-const Main = () => {
+interface MainComponentProps {
+    planetsService: PlanetsService
+}
+
+const Main = ({planetsService}: MainComponentProps) => {
     const {theme} = useContext(ThemeContext),
+        dispatch = useDispatch(),
         styles = StyleSheet.create({
             main: {
                 ...Grid.define("auto", "minmax(auto, 226px) auto"),
@@ -30,6 +39,25 @@ const Main = () => {
             nav: Grid.setRowCol(1, 1),
             pageContent: Grid.setRowCol(1, 2)
         });
+
+    const setPlanets = (serverResponse: PlanetsServiceResponse): void => {
+        dispatch(PlanetsCreator.setPlanets(serverResponse.planets, serverResponse.ttl));
+    };
+
+    const setPlanetsCallback = useCallback(setPlanets, [dispatch]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setPlanetsCallback((await planetsService.fetchPlanets()));
+            } catch (error) {
+                Logger.logError(error);
+            }
+        };
+
+        fetchData();
+    }, [planetsService, setPlanetsCallback]); // Include only the dependencies needed inside the useEffect callback
+
 
     // Apparently, react-router-dom >= 6.0.0 does not allow HOC call inside the Route. It must be defined sadly outside.
     const PlanetsPage = withDocumentTitle(Planets, useContext(TranslationsContext).getMessage('planetsPage')),
