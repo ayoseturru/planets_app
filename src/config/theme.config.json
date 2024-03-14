@@ -1,14 +1,18 @@
 {
   "normal": {
-    "app": {
-      "background": "#282c34",
-      "text": "white"
+    "nav": {
+      "background": "#154064",
+      "backgroundActive": "#1C5686",
+      "text": "#F5F5F5",
+      "textActive": "#E0E0E0"
     }
   },
   "dark": {
-    "app": {
-      "background": "#282c34",
-      "text": "white"
+    "nav": {
+      "background": "#154064",
+      "backgroundActive": "#1C5686",
+      "text": "#F5F5F5",
+      "textActive": "#E0E0E0"
     }
   }
 }

@@ -1,4 +1,6 @@
 {
-  "appTitle": "Planets",
-  "planetsPage": "All Planets"
+  "appTitle": "PlanetsApp",
+  "planetsPage": "All Planets",
+  "planets": "Planets",
+  "favorites": "Favorites"
 }

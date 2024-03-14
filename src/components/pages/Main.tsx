@@ -1,41 +1,49 @@
 import React, {useContext} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import withDocumentTitle from './withDocumentTitle';
-import Planets from "./main/Planets";
+import Planets from "./planets/Planets";
 import {TranslationsContext} from "../../providers/TranslationProvider";
 import {css, StyleSheet} from "aphrodite";
 import Grid from "../../utils/Grid";
-import {ThemeContext} from "../../providers/ThemeProvider";
+import Nav from "../nav/Nav";
+import Favorites from "./favorites/Favorites";
 
-export const RouterPaths: Record<string, string> = {
-    Planets: "/planets"
+type PageLinks = {
+    Planets: string;
+    Favorites: string;
+};
+
+export const RouterPaths: PageLinks = {
+    Planets: "/planets",
+    Favorites: "/favorites"
 };
 
 const Main = () => {
-    const {theme} = useContext(ThemeContext),
-        styles = StyleSheet.create({
-            main: {
-                ...Grid.define("max-content auto", "auto"),
-                backgroundColor: theme.app.background,
-                color: theme.app.text,
-                height: "100vh"
-            },
-            pageContent: Grid.setRowCol(2, 1),
-        });
+    const styles = StyleSheet.create({
+        main: {
+            ...Grid.define("auto", "max-content auto"),
+            height: "100vh"
+        },
+        nav: Grid.setRowCol(1, 1),
+        pageContent: Grid.setRowCol(1, 2)
+    });
 
     // Apparently, react-router-dom >= 6.0.0 does not allow HOC call inside the Route. It must be defined sadly outside.
-    const PlanetsPage = withDocumentTitle(Planets, useContext(TranslationsContext).getMessage('planetsPage'));
+    const PlanetsPage = withDocumentTitle(Planets, useContext(TranslationsContext).getMessage('planetsPage')),
+        FavoritesPage = withDocumentTitle(Favorites, useContext(TranslationsContext).getMessage('favorites'));
 
     return (
         <div className={css(styles.main)}>
-            <div className={css(styles.pageContent)}>
-                <Router>
+            <Router>
+                <Nav extraStyle={styles.nav}/>
+                <div className={css(styles.pageContent)}>
                     <Routes>
                         <Route path={RouterPaths.Planets} element={<PlanetsPage/>}/>
+                        <Route path={RouterPaths.Favorites} element={<FavoritesPage/>}/>
                         <Route path="*" element={<Navigate to={RouterPaths.Planets}/>}/>
                     </Routes>
-                </Router>
-            </div>
+                </div>
+            </Router>
         </div>
     );
 };
