@@ -2,5 +2,7 @@
   "appTitle": "PlanetsApp",
   "planetsPage": "All Planets",
   "planets": "Planets",
-  "favorites": "Favorites"
+  "favorites": "Favorites",
+  "loading": "Loading...",
+  "unknown": "unknown"
 }

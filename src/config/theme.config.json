@@ -14,6 +14,10 @@
       "thBorder": "#EBEBEB",
       "thText": "#828282",
       "tdBorder": "#828282"
+    },
+    "spinner": {
+      "border": "#f3f3f3",
+      "borderTop": "#3498db"
     }
   },
   "dark": {
@@ -31,6 +35,10 @@
       "thBorder": "#EBEBEB",
       "thText": "#828282",
       "tdBorder": "#828282"
+    },
+    "spinner": {
+      "border": "#f3f3f3",
+      "borderTop": "#3498db"
     }
   }
 }
