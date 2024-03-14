@@ -3,28 +3,12 @@
     "app": {
       "background": "#282c34",
       "text": "white"
-    },
-    "header": {
-      "background": "#007BFF",
-      "text": "#F8F9FA"
-    },
-    "footer": {
-      "background": "#343A40",
-      "text": "#CED4DA"
     }
   },
   "dark": {
     "app": {
       "background": "#282c34",
       "text": "white"
-    },
-    "header": {
-      "background": "#007BFF",
-      "text": "#F8F9FA"
-    },
-    "footer": {
-      "background": "#343A40",
-      "text": "#CED4DA"
     }
   }
 }
