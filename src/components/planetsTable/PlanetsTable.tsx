@@ -13,6 +13,7 @@ import PlanetsCreator from "../../state/creators/planets.creator";
 import Grid from "../../utils/Grid";
 import {useNavigate} from "react-router-dom";
 import {RouterPaths} from "../pages/Main";
+import SortIcon from "../sortIcon/SortIcon";
 
 const PlanetsTable = () => {
     const translations = useContext(TranslationsContext),
@@ -88,11 +89,17 @@ const PlanetsTable = () => {
             {planetsReady && <table className={css(styles.table)} aria-label={planetsMessage}>
                 <thead>
                 <tr>
-                    <th className={css(styles.th)}>Name</th>
-                    <th className={css(styles.th)}>Climate</th>
-                    <th className={css(styles.th)}>Diameter</th>
-                    <th className={css(styles.th)}>Population</th>
-                    <th className={css(styles.th)}>Favorite</th>
+                    <th className={css(styles.th)}>{translations.getMessage("planetName")}</th>
+                    <th className={css(styles.th)}>{translations.getMessage("planetClimate")}</th>
+                    <th className={css(styles.th)}>
+                        {translations.getMessage("planetDiameter")}
+                        <SortIcon upsideDown={false}/>
+                    </th>
+                    <th className={css(styles.th)}>
+                        {translations.getMessage("planetPopulation")}
+                        <SortIcon upsideDown={false}/>
+                    </th>
+                    <th className={css(styles.th)}>{translations.getMessage("planetFavorite")}</th>
                 </tr>
                 </thead>
                 <tbody>

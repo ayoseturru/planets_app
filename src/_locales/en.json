@@ -8,5 +8,10 @@
   "addFavorites": "Add to favorites",
   "goToPlanet": "Go to Planet",
   "climate": "Climate: ",
-  "gravity": "Gravity: "
+  "gravity": "Gravity: ",
+  "planetName": "Name",
+  "planetClimate": "Climate",
+  "planetDiameter": "Diameter",
+  "planetPopulation": "Population",
+  "planetFavorite": "Favorite"
 }
