@@ -47,11 +47,12 @@ export default class RestPlanetsService implements PlanetsService {
     }
 
     private planetDataToPlanet(planetData: any): Planet {
+        if (planetData.name === "Hoth") console.log(planetData);
         return {
             name: planetData.name,
             climate: planetData.climate,
-            diameter: Number(planetData.diameter),
-            population: Number(planetData.population),
+            diameter: planetData.diameter === "unknown" ? -1 : Number(planetData.diameter),
+            population: planetData.population === "unknown" ? -1 : Number(planetData.population),
             gravity: planetData.gravity
         };
     }

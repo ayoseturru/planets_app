@@ -65,10 +65,8 @@ const PlanetsTable = () => {
         planetsReady: boolean = planets && Object.keys(planets).length > 0,
         planetsMessage: string = translations.getMessage("planets");
 
-    const filterField = (field: string | number): string => {
-        const tempValue: string = `${field}`;
-
-        return tempValue === "NaN" ? translations.getMessage("unknown") : tempValue;
+    const filterField = (field: number): string => {
+        return field === -1 ? translations.getMessage("unknown") : `${field}`;
     };
 
     const handleFavoriteAction = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLTableDataCellElement>, planetId: string): void => {
