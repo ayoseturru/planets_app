@@ -1,12 +1,20 @@
 import React from 'react';
+import {css, StyleSheet} from "aphrodite";
 
 interface FavoriteIconProps {
     filled: boolean;
 }
 
 const FavoriteIcon: React.FC<FavoriteIconProps> = ({filled}) => {
+    const styles = StyleSheet.create({
+        icon: {
+            cursor: !filled ? "pointer" : "default"
+        }
+    });
+
     return (
         <svg
+            className={css(styles.icon)}
             width="16"
             height="16"
             viewBox="0 0 16 16"

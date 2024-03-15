@@ -23,6 +23,14 @@ const PlanetsReducer = (state: PlanetsDataState = defaultState, action: PlanetsA
                     ...action.planets
                 }
             };
+        case PlanetsActions.ADD_TO_FAVORITES:
+            return {
+                ...state,
+                favorites: {
+                    ...state.favorites,
+                    [action.planetId!]: true
+                }
+            };
         default:
             return state;
     }

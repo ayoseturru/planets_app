@@ -4,5 +4,6 @@
   "planets": "Planets",
   "favorites": "Favorites",
   "loading": "Loading...",
-  "unknown": "unknown"
+  "unknown": "unknown",
+  "addFavorites": "Add to favorites"
 }

@@ -3,18 +3,20 @@ import {css, StyleSheet} from 'aphrodite';
 import {TranslationsContext} from "../../providers/TranslationProvider";
 import {ThemeContext} from "../../providers/ThemeProvider";
 import MediaQueryUtils from "../../utils/MediaQuery";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {PlanetsAppState} from "../../state/reducers/initialState";
 import {PlanetsCollection} from "../../models/PlanetsCollection";
 import FavoriteIcon from "../favoriteIcon/FavoriteIcon";
 import FavoritesCollection from "../../models/FavoritesCollection";
 import Loader from "../loader/Loader";
+import PlanetsCreator from "../../state/creators/planets.creator";
 
 const PlanetsTable = () => {
     const translations = useContext(TranslationsContext),
         planets: PlanetsCollection = useSelector((state: PlanetsAppState) => state.planetsData.planets),
         favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
         {theme} = useContext(ThemeContext),
+        dispatch = useDispatch(),
         styles = StyleSheet.create({
             container: {
                 overflowX: "auto",
@@ -59,6 +61,14 @@ const PlanetsTable = () => {
         return tempValue === "NaN" ? translations.getMessage("unknown") : tempValue;
     };
 
+    const addToFavorites = (planetId: string): void => {
+        dispatch(PlanetsCreator.addToFavorites(parseInt(planetId)));
+    };
+
+    const onFavoriteKeyDown = (event: React.KeyboardEvent<HTMLTableDataCellElement>, planetId: string) => {
+        if (event.key === "Enter") addToFavorites(planetId);
+    };
+
     return (
         <div className={css(styles.container)}>
             <h2 className={css(styles.title)}>{planetsMessage}</h2>
@@ -80,7 +90,14 @@ const PlanetsTable = () => {
                             <td className={css(styles.td)}>{planet.climate}</td>
                             <td className={css(styles.td)}>{filterField(planet.diameter)}</td>
                             <td className={css(styles.td)}>{filterField(planet.population)}</td>
-                            <td className={css(styles.td)}>
+                            <td
+                                className={css(styles.td)}
+                                tabIndex={0}
+                                onClick={() => addToFavorites(planetKey)}
+                                onKeyDown={(event) => onFavoriteKeyDown(event, planetKey)}
+                                role="button"
+                                aria-label={translations.getMessage("addFavorites")}
+                            >
                                 <FavoriteIcon filled={favorites[parseInt(planetKey)]}/>
                             </td>
                         </tr>
