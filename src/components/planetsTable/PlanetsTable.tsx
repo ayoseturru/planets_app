@@ -25,6 +25,8 @@ const PlanetsTable = () => {
             container: {
                 ...Grid.setRowCol(1, 1),
                 overflowX: "auto",
+                maxHeight: "100vh",
+                overflowY: "scroll",
                 ...MediaQueryUtils.mobile({maxWidth: 300})
             },
             table: {

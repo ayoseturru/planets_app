@@ -6,7 +6,9 @@ import Planet from "../../planet/Planet";
 
 const Planets = () => {
     const styles = StyleSheet.create({
-        container: Grid.define("max-content", "auto max-content"),
+        container: {
+            ...Grid.define("max-content", "auto max-content")
+        },
     });
 
     return (
