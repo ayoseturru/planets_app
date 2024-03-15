@@ -15,27 +15,38 @@ export default class RestPlanetsService implements PlanetsService {
         this.url = url;
     }
 
-    async fetchPlanets(): Promise<PlanetsServiceResponse> {
+    async* fetchPlanets(): AsyncGenerator<PlanetsServiceResponse> {
         try {
-            let allPlanets = [], nextUrl = this.url;
+            let nextUrl = this.url;
 
             while (nextUrl) {
-                const response = await fetch(nextUrl), data = await response.json();
-                allPlanets.push(...data.results);
+                const response = await fetch(nextUrl);
+                const data = await response.json();
+
+                if (data.results && data.results.length) {
+                    yield {ttl: this.ttl, planets: this.parseResponse(data.results)};
+                } else {
+                    throw Errors.Generic;
+                }
+
                 nextUrl = data.next;
             }
-
-            if (allPlanets.length) {
-                return {ttl: this.ttl, planets: RestPlanetsService.parseResponse(allPlanets)};
-            } else {
-                throw Errors.Generic;
-            }
         } catch (error) {
-            return {ttl: this.ttl, planets: RestPlanetsService.parseResponse(PlanetsData), error: `${error}`};
+            yield {ttl: this.ttl, planets: this.parseResponse(PlanetsData), error: `${error}`};
         }
     }
 
-    private static planetDataToPlanet(planetData: any): Planet {
+    private parseResponse(data: any): PlanetsCollection {
+        const planetsMap: PlanetsCollection = {};
+
+        data.forEach((planetData: any) => {
+            planetsMap[this.getIdFromUrl(planetData.url)] = this.planetDataToPlanet(planetData);
+        });
+
+        return planetsMap;
+    }
+
+    private planetDataToPlanet(planetData: any): Planet {
         return {
             name: planetData.name,
             climate: planetData.climate,
@@ -44,18 +55,8 @@ export default class RestPlanetsService implements PlanetsService {
         };
     }
 
-    private static getIdFromUrl(url: string): number {
+    private getIdFromUrl(url: string): number {
         const matches = url.match(/\/(\d+)\/$/);
         return matches ? parseInt(matches[1], 10) : -1;
-    }
-
-    private static parseResponse(data: any): PlanetsCollection {
-        const planetsMap: PlanetsCollection = {};
-
-        data.forEach((planetData: any) => {
-            planetsMap[RestPlanetsService.getIdFromUrl(planetData.url)] = RestPlanetsService.planetDataToPlanet(planetData);
-        });
-
-        return planetsMap;
     }
 }

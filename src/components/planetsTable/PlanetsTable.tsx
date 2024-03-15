@@ -50,7 +50,7 @@ const PlanetsTable = () => {
                 ...MediaQueryUtils.mobile({padding: 6})
             }
         }),
-        planetsReady: boolean = Object.keys(planets).length > 0,
+        planetsReady: boolean = planets && Object.keys(planets).length > 0,
         planetsMessage: string = translations.getMessage("planets");
 
     const filterField = (field: string | number): string => {

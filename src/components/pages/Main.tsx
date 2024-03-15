@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
 import withDocumentTitle from './withDocumentTitle';
 import Planets from "./planets/Planets";
@@ -10,8 +10,11 @@ import Favorites from "./favorites/Favorites";
 import {ThemeContext} from "../../providers/ThemeProvider";
 import {PlanetsService, PlanetsServiceResponse} from "../../services/PlanetsService";
 import Logger from "../../utils/Logger";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import PlanetsCreator from "../../state/creators/planets.creator";
+import {Simulate} from "react-dom/test-utils";
+import {PlanetsAppState} from "../../state/reducers/initialState";
+import error = Simulate.error;
 
 type PageLinks = {
     Planets: string;
@@ -27,6 +30,8 @@ interface MainComponentProps {
     planetsService: PlanetsService
 }
 
+let timer: number | undefined = undefined;
+
 const Main = ({planetsService}: MainComponentProps) => {
     const {theme} = useContext(ThemeContext),
         dispatch = useDispatch(),
@@ -41,7 +46,9 @@ const Main = ({planetsService}: MainComponentProps) => {
             },
             nav: Grid.setRowCol(1, 1),
             pageContent: Grid.setRowCol(1, 2)
-        });
+        }),
+        currentTtl: number = useSelector((state: PlanetsAppState) => state.planetsData.ttl),
+        [ttlInvalid, setTtlInvalid] = useState((new Date().getTime()) >= currentTtl);
 
     const setPlanets = (serverResponse: PlanetsServiceResponse): void => {
         dispatch(PlanetsCreator.setPlanets(serverResponse.planets, serverResponse.ttl));
@@ -52,15 +59,25 @@ const Main = ({planetsService}: MainComponentProps) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setPlanetsCallback((await planetsService.fetchPlanets()));
+                for await (const response of planetsService.fetchPlanets()) {
+                    if (response.error) Logger.logError(error);
+                    setPlanetsCallback(response);
+                }
             } catch (error) {
                 Logger.logError(error);
             }
         };
 
-        fetchData();
-    }, [planetsService, setPlanetsCallback]); // Include only the dependencies needed inside the useEffect callback
+        if (ttlInvalid) fetchData();
+    }, [planetsService, setPlanetsCallback, ttlInvalid]);
 
+    useEffect(() => {
+        // If it was set to zero, it was hit on the above useEffect
+        if (currentTtl > 0) {
+            clearTimeout(timer);
+            setTimeout(() => setTtlInvalid(true), Math.max(currentTtl - (new Date().getTime()), 0));
+        }
+    }, [ttlInvalid, currentTtl]);
 
     // Apparently, react-router-dom >= 6.0.0 does not allow HOC call inside the Route. It must be defined sadly outside.
     const PlanetsPage = withDocumentTitle(Planets, useContext(TranslationsContext).getMessage('planetsPage')),

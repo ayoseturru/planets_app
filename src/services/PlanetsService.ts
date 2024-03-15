@@ -9,5 +9,5 @@ export type PlanetsServiceResponse = {
 export interface PlanetsService {
     url: string;
 
-    fetchPlanets(): Promise<PlanetsServiceResponse>;
+    fetchPlanets(): AsyncGenerator<PlanetsServiceResponse>;
 }
