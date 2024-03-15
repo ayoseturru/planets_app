@@ -1,7 +1,7 @@
-import PlanetsActions from "../actions/planets.actions";
 import {PlanetsAppState} from "../reducers/initialState";
 import {call, select, takeEvery} from 'redux-saga/effects';
 import Storage from "../../utils/Storage";
+import PlanetsActions from "../actions/planets.actions";
 
 function* saveState() {
     const state: PlanetsAppState = yield select();
@@ -9,5 +9,5 @@ function* saveState() {
 }
 
 export function* planetsSaga() {
-    yield takeEvery([PlanetsActions.SET_PLANETS], saveState);
+    yield takeEvery(Object.values(PlanetsActions), saveState);
 }

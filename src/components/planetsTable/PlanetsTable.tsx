@@ -16,6 +16,10 @@ const PlanetsTable = () => {
         favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
         {theme} = useContext(ThemeContext),
         styles = StyleSheet.create({
+            container: {
+                overflowX: "auto",
+                ...MediaQueryUtils.mobile({maxWidth: 300})
+            },
             table: {
                 color: theme.table.text,
                 fontSize: 14,
@@ -44,8 +48,7 @@ const PlanetsTable = () => {
                 margin: 0,
                 padding: 13,
                 ...MediaQueryUtils.mobile({padding: 6})
-            },
-            favorite: MediaQueryUtils.mobile({display: "none"})
+            }
         }),
         planetsReady: boolean = Object.keys(planets).length > 0,
         planetsMessage: string = translations.getMessage("planets");
@@ -57,7 +60,7 @@ const PlanetsTable = () => {
     };
 
     return (
-        <div>
+        <div className={css(styles.container)}>
             <h2 className={css(styles.title)}>{planetsMessage}</h2>
             {planetsReady && <table className={css(styles.table)} aria-label={planetsMessage}>
                 <thead>
@@ -66,7 +69,7 @@ const PlanetsTable = () => {
                     <th className={css(styles.th)}>Climate</th>
                     <th className={css(styles.th)}>Diameter</th>
                     <th className={css(styles.th)}>Population</th>
-                    <th className={css(styles.th, styles.favorite)}>Favorite</th>
+                    <th className={css(styles.th)}>Favorite</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,7 +80,7 @@ const PlanetsTable = () => {
                             <td className={css(styles.td)}>{planet.climate}</td>
                             <td className={css(styles.td)}>{filterField(planet.diameter)}</td>
                             <td className={css(styles.td)}>{filterField(planet.population)}</td>
-                            <td className={css(styles.td, styles.favorite)}>
+                            <td className={css(styles.td)}>
                                 <FavoriteIcon filled={favorites[parseInt(planetKey)]}/>
                             </td>
                         </tr>

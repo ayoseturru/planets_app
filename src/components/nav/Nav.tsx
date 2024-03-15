@@ -29,11 +29,7 @@ const Nav = ({extraStyle}: NavProps) => {
                 fontSize: 22,
                 fontWeight: 800,
                 margin: 0,
-                ...MediaQueryUtils.mobile(
-                    {
-                        fontSize: 14
-                    }
-                )
+                ...MediaQueryUtils.mobile({fontSize: 14})
             },
             navItem: {
                 padding: "16px 24px",
@@ -49,11 +45,7 @@ const Nav = ({extraStyle}: NavProps) => {
                     outline: 'none',
                     textDecoration: "underline"
                 },
-                ...MediaQueryUtils.mobile(
-                    {
-                        fontSize: 12
-                    }
-                )
+                ...MediaQueryUtils.mobile({fontSize: 12})
             }
         });
 

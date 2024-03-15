@@ -31,10 +31,13 @@ const Main = ({planetsService}: MainComponentProps) => {
     const {theme} = useContext(ThemeContext),
         dispatch = useDispatch(),
         styles = StyleSheet.create({
+            mainWrapper: Grid.define("auto", "auto"),
             main: {
+                ...Grid.setRowCol(1, 1),
                 ...Grid.define("auto", "minmax(auto, 226px) auto"),
                 backgroundColor: theme.app.background,
-                height: "100vh"
+                minHeight: "100vh",
+                height: "100%"
             },
             nav: Grid.setRowCol(1, 1),
             pageContent: Grid.setRowCol(1, 2)
@@ -64,17 +67,19 @@ const Main = ({planetsService}: MainComponentProps) => {
         FavoritesPage = withDocumentTitle(Favorites, useContext(TranslationsContext).getMessage('favorites'));
 
     return (
-        <div className={css(styles.main)}>
-            <Router>
-                <Nav extraStyle={styles.nav}/>
-                <div className={css(styles.pageContent)}>
-                    <Routes>
-                        <Route path={RouterPaths.Planets} element={<PlanetsPage/>}/>
-                        <Route path={RouterPaths.Favorites} element={<FavoritesPage/>}/>
-                        <Route path="*" element={<Navigate to={RouterPaths.Planets}/>}/>
-                    </Routes>
-                </div>
-            </Router>
+        <div className={css(styles.mainWrapper)}>
+            <div className={css(styles.main)}>
+                <Router>
+                    <Nav extraStyle={styles.nav}/>
+                    <div className={css(styles.pageContent)}>
+                        <Routes>
+                            <Route path={RouterPaths.Planets} element={<PlanetsPage/>}/>
+                            <Route path={RouterPaths.Favorites} element={<FavoritesPage/>}/>
+                            <Route path="*" element={<Navigate to={RouterPaths.Planets}/>}/>
+                        </Routes>
+                    </div>
+                </Router>
+            </div>
         </div>
     );
 };
