@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {css, StyleSheet} from 'aphrodite';
 import {TranslationsContext} from "../../providers/TranslationProvider";
 import {ThemeContext} from "../../providers/ThemeProvider";
@@ -64,7 +64,9 @@ const PlanetsTable = () => {
             }
         }),
         planetsReady: boolean = planets && Object.keys(planets).length > 0,
-        planetsMessage: string = translations.getMessage("planets");
+        planetsMessage: string = translations.getMessage("planets"),
+        [populationSort, setPopulationSort] = useState<boolean | null>(null),
+        [diameterSort, setDiameterSort] = useState<boolean | null>(null);
 
     const filterField = (field: number): string => {
         return field === -1 ? translations.getMessage("unknown") : `${field}`;
@@ -91,13 +93,13 @@ const PlanetsTable = () => {
                 <tr>
                     <th className={css(styles.th)}>{translations.getMessage("planetName")}</th>
                     <th className={css(styles.th)}>{translations.getMessage("planetClimate")}</th>
-                    <th className={css(styles.th)}>
+                    <th className={css(styles.th)} onClick={() => setDiameterSort(!diameterSort)}>
                         {translations.getMessage("planetDiameter")}
-                        <SortIcon upsideDown={false}/>
+                        <SortIcon upsideDown={diameterSort}/>
                     </th>
-                    <th className={css(styles.th)}>
+                    <th className={css(styles.th)} onClick={() => setPopulationSort(!populationSort)}>
                         {translations.getMessage("planetPopulation")}
-                        <SortIcon upsideDown={false}/>
+                        <SortIcon upsideDown={populationSort}/>
                     </th>
                     <th className={css(styles.th)}>{translations.getMessage("planetFavorite")}</th>
                 </tr>

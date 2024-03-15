@@ -2,7 +2,7 @@ import React from 'react';
 import {css, StyleSheet} from "aphrodite";
 
 interface SortIconProps {
-    upsideDown: boolean;
+    upsideDown?: boolean | null;
 }
 
 const SortIcon = ({upsideDown}: SortIconProps) => {
