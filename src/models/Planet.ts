@@ -4,6 +4,7 @@ type Planet = {
     diameter: number;
     population: number;
     gravity: string;
+    id: number;
 };
 
 export default Planet;
