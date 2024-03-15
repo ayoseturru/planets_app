@@ -18,11 +18,13 @@ import error = Simulate.error;
 
 type PageLinks = {
     Planets: string;
+    Planet: string;
     Favorites: string;
 };
 
 export const RouterPaths: PageLinks = {
     Planets: "/planets",
+    Planet: "/planets/:planetId",
     Favorites: "/favorites"
 };
 
@@ -91,6 +93,7 @@ const Main = ({planetsService}: MainComponentProps) => {
                     <div className={css(styles.pageContent)}>
                         <Routes>
                             <Route path={RouterPaths.Planets} element={<PlanetsPage/>}/>
+                            <Route path={RouterPaths.Planet} element={<PlanetsPage/>}/>
                             <Route path={RouterPaths.Favorites} element={<FavoritesPage/>}/>
                             <Route path="*" element={<Navigate to={RouterPaths.Planets}/>}/>
                         </Routes>

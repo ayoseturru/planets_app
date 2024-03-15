@@ -18,6 +18,14 @@
     "spinner": {
       "border": "#f3f3f3",
       "borderTop": "#3498db"
+    },
+    "planet": {
+      "background": "#154064",
+      "backgroundActive": "#1C5686",
+      "text": "#F5F5F5",
+      "textActive": "#E0E0E0",
+      "box": "#F2F2F2",
+      "boxText": "#333333"
     }
   },
   "dark": {
@@ -39,6 +47,14 @@
     "spinner": {
       "border": "#f3f3f3",
       "borderTop": "#3498db"
+    },
+    "planet": {
+      "background": "#154064",
+      "backgroundActive": "#1C5686",
+      "text": "#F5F5F5",
+      "textActive": "#E0E0E0",
+      "box": "#F2F2F2",
+      "boxText": "#333333"
     }
   }
 }

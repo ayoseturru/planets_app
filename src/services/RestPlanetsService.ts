@@ -51,7 +51,8 @@ export default class RestPlanetsService implements PlanetsService {
             name: planetData.name,
             climate: planetData.climate,
             diameter: Number(planetData.diameter),
-            population: Number(planetData.population)
+            population: Number(planetData.population),
+            gravity: planetData.gravity
         };
     }
 

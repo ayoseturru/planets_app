@@ -5,5 +5,8 @@
   "favorites": "Favorites",
   "loading": "Loading...",
   "unknown": "unknown",
-  "addFavorites": "Add to favorites"
+  "addFavorites": "Add to favorites",
+  "goToPlanet": "Go to Planet",
+  "climate": "Climate: ",
+  "gravity": "Gravity: "
 }

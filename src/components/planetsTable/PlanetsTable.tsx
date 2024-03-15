@@ -10,15 +10,20 @@ import FavoriteIcon from "../favoriteIcon/FavoriteIcon";
 import FavoritesCollection from "../../models/FavoritesCollection";
 import Loader from "../loader/Loader";
 import PlanetsCreator from "../../state/creators/planets.creator";
+import Grid from "../../utils/Grid";
+import {useNavigate} from "react-router-dom";
+import {RouterPaths} from "../pages/Main";
 
 const PlanetsTable = () => {
     const translations = useContext(TranslationsContext),
         planets: PlanetsCollection = useSelector((state: PlanetsAppState) => state.planetsData.planets),
         favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
+        navigate = useNavigate(),
         {theme} = useContext(ThemeContext),
         dispatch = useDispatch(),
         styles = StyleSheet.create({
             container: {
+                ...Grid.setRowCol(1, 1),
                 overflowX: "auto",
                 ...MediaQueryUtils.mobile({maxWidth: 300})
             },
@@ -50,6 +55,9 @@ const PlanetsTable = () => {
                 margin: 0,
                 padding: 13,
                 ...MediaQueryUtils.mobile({padding: 6})
+            },
+            tr: {
+                cursor: "pointer"
             }
         }),
         planetsReady: boolean = planets && Object.keys(planets).length > 0,
@@ -61,12 +69,17 @@ const PlanetsTable = () => {
         return tempValue === "NaN" ? translations.getMessage("unknown") : tempValue;
     };
 
-    const addToFavorites = (planetId: string): void => {
-        dispatch(PlanetsCreator.addToFavorites(parseInt(planetId)));
+    const handleFavoriteAction = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLTableDataCellElement>, planetId: string): void => {
+        if (event.type === "click" || (event.type === "keydown" && (event as React.KeyboardEvent<HTMLTableDataCellElement>).key === "Enter")) {
+            dispatch(PlanetsCreator.addToFavorites(parseInt(planetId)));
+            event.stopPropagation();
+        }
     };
 
-    const onFavoriteKeyDown = (event: React.KeyboardEvent<HTMLTableDataCellElement>, planetId: string) => {
-        if (event.key === "Enter") addToFavorites(planetId);
+    const handleGoToPlanet = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLTableRowElement>, planetId: string): void => {
+        if (event.type === "click" || (event.type === "keydown" && (event as React.KeyboardEvent<HTMLTableRowElement>).key === "Enter")) {
+            navigate(RouterPaths.Planet.replace(":planetId", planetId));
+        }
     };
 
     return (
@@ -85,7 +98,12 @@ const PlanetsTable = () => {
                 <tbody>
                 {Object.entries(planets).map(([planetKey, planet]) => {
                     return (
-                        <tr key={planetKey}>
+                        <tr key={planetKey} className={css(styles.tr)} onClick={(event) => handleGoToPlanet(event, planetKey)}
+                            onKeyDown={(event) => handleGoToPlanet(event, planetKey)}
+                            tabIndex={0}
+                            role="button"
+                            aria-label={translations.getMessage("goToPlanet")}
+                        >
                             <td className={css(styles.td)}><b>{planet.name}</b></td>
                             <td className={css(styles.td)}>{planet.climate}</td>
                             <td className={css(styles.td)}>{filterField(planet.diameter)}</td>
@@ -93,8 +111,8 @@ const PlanetsTable = () => {
                             <td
                                 className={css(styles.td)}
                                 tabIndex={0}
-                                onClick={() => addToFavorites(planetKey)}
-                                onKeyDown={(event) => onFavoriteKeyDown(event, planetKey)}
+                                onClick={(event) => handleFavoriteAction(event, planetKey)}
+                                onKeyDown={(event) => handleFavoriteAction(event, planetKey)}
                                 role="button"
                                 aria-label={translations.getMessage("addFavorites")}
                             >
