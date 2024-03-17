@@ -15,6 +15,10 @@ import {useNavigate} from "react-router-dom";
 import {RouterPaths} from "../pages/Main";
 import SortIcon from "../sortIcon/SortIcon";
 
+export const PLANETS_TEST_IDS = {
+    Planets: "planet-row_"
+};
+
 const populationName: PlanetsCollectionSortField = "population", diameterName: PlanetsCollectionSortField = "diameter";
 
 const PlanetsTable = () => {
@@ -141,10 +145,7 @@ const PlanetsTable = () => {
                     return (
                         <tr key={planet.id} className={css(styles.tr)} onClick={(event) => handleGoToPlanet(event, planet.id)}
                             onKeyDown={(event) => handleGoToPlanet(event, planet.id)}
-                            tabIndex={0}
-                            role="button"
-                            aria-label={translations.getMessage("goToPlanet")}
-                        >
+                            tabIndex={0} role="button" aria-label={translations.getMessage("goToPlanet")} data-testid={`${PLANETS_TEST_IDS.Planets}${planet.id}`}>
                             <td className={css(styles.td)}><b>{planet.name}</b></td>
                             <td className={css(styles.td)}>{planet.climate}</td>
                             <td className={css(styles.td)}>{filterField(planet.diameter)}</td>
