@@ -2,10 +2,9 @@ import InitialState, {PlanetsDataState} from "./initialState";
 import PlanetsActions from "../actions/planets.actions";
 import {PlanetsCollection} from "../../models/PlanetsCollection";
 import Storage from "../../utils/Storage";
-import Time from "../../utils/Time";
 
 export interface PlanetsActionType {
-    type: keyof typeof PlanetsActions;
+    type: typeof PlanetsActions[keyof typeof PlanetsActions];
     planets?: PlanetsCollection;
     planetId?: number;
     ttl?: typeof InitialState.planetsData.ttl;

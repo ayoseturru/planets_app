@@ -32,7 +32,7 @@ export default class RestPlanetsService implements PlanetsService {
                 nextUrl = data.next;
             }
         } catch (error) {
-            yield {ttl: this.ttl, planets: this.parseResponse(PlanetsData), error: `${error}`};
+            yield {ttl: this.ttl, planets: PlanetsData, error: `${error}`};
         }
     }
 

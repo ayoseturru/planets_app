@@ -1,11 +1,11 @@
-import PlanetsReducer from './PlanetsReducer';
 import {PlanetsDataState} from "./initialState";
 import PlanetsActions from "../actions/planets.actions";
 import {PlanetsCollection} from "../../models/PlanetsCollection";
+import PlanetsReducer, {PlanetsActionType} from "./planetsReducer";
 
 const planets: PlanetsCollection = {
-    1: {id: 1, name: 'Mercury'},
-    2: {id: 2, name: 'Venus'}
+    1: {id: 1, name: 'Mercury', climate: 'hot', diameter: 4879, population: 0, gravity: '3.7 m/s²'},
+    2: {id: 2, name: 'Venus', climate: 'hot', diameter: 12104, population: 0, gravity: '8.87 m/s²'}
 };
 
 describe('PlanetsReducer', () => {
@@ -14,7 +14,7 @@ describe('PlanetsReducer', () => {
             favorites: {},
             ttl: 0
         },
-        initialStateWithData: PlanetsCollection = {
+        initialStateWithData: PlanetsDataState = {
             planets,
             favorites: {1: true},
             ttl: 15
@@ -56,7 +56,7 @@ describe('PlanetsReducer', () => {
     });
 
     it('should not add a planet to favorites twice', () => {
-        const stateBefore = {...initialState}, planetId = 1, action = {type: PlanetsActions.ADD_TO_FAVORITES, planetId};
+        const stateBefore = {...initialState}, planetId = 1, action = {type: PlanetsActions.ADD_TO_FAVORITES, planetId} as PlanetsActionType;
 
         const expectedState = {
             ...stateBefore,
@@ -80,7 +80,7 @@ describe('PlanetsReducer', () => {
         };
 
         const planetId = 1,
-            action = {type: PlanetsActions.REMOVE_FROM_FAVORITES, planetId},
+            action = {type: PlanetsActions.REMOVE_FROM_FAVORITES, planetId} as PlanetsActionType,
             {[planetId]: removedKey, ...restFavorites} = stateBefore.favorites;
 
         const expectedState = {
