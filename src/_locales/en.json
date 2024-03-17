@@ -13,5 +13,9 @@
   "planetClimate": "Climate",
   "planetDiameter": "Diameter",
   "planetPopulation": "Population",
-  "planetFavorite": "Favorite"
+  "planetFavorite": "Favorite",
+  "removeFavorite": "Remove favorite",
+  "removeFavoriteDesc": "Planet will be removed from favorites",
+  "cancel": "Cancel",
+  "remove": "Remove"
 }

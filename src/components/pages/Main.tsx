@@ -35,7 +35,7 @@ interface MainComponentProps {
 
 let timer: number | undefined = undefined;
 
-const Main = ({planetsService}: MainComponentProps) => {
+const Main: React.FC<MainComponentProps> = ({planetsService}) => {
     const {theme} = useContext(ThemeContext),
         dispatch = useDispatch(),
         styles = StyleSheet.create({

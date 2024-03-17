@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {css, StyleSheet} from "aphrodite";
 import Grid from "../../../utils/Grid";
 import {ThemeContext} from "../../../providers/ThemeProvider";
@@ -8,10 +8,12 @@ import {useSelector} from "react-redux";
 import {PlanetsAppState} from "../../../state/reducers/initialState";
 import Favorite from "../../favorite/Favorite";
 import {PlanetsCollection} from "../../../models/PlanetsCollection";
+import ConfirmationModal from "../../cconfirmationModal/ConfirmationModal";
 
 const Favorites = () => {
     const {theme} = useContext(ThemeContext),
         translations = useContext(TranslationsContext),
+        [modalEnabled, setModalEnabled] = useState(false),
         favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
         planets: PlanetsCollection = useSelector((state: PlanetsAppState) => state.planetsData.planets),
         styles = StyleSheet.create({
@@ -36,17 +38,28 @@ const Favorites = () => {
             }
         });
 
+    const toggleModalEnabled = (): void => {
+        setModalEnabled(!modalEnabled);
+    };
+
+    const deleteFavorite = (): void => {
+        setModalEnabled(false);
+    };
+
     return (
-        <div className={css(styles.container)}>
-            <h2 className={css(styles.title)}>{translations.getMessage("favorites")}</h2>
-            <div className={css(styles.favoritesWrapper)}>
-                {Object.keys(favorites).map((planetId, index) => {
-                    return (
-                        <Favorite key={planetId} planet={planets[parseInt(planetId)]}/>
-                    );
-                })}
+        <React.Fragment>
+            <div className={css(styles.container)}>
+                <h2 className={css(styles.title)}>{translations.getMessage("favorites")}</h2>
+                <div className={css(styles.favoritesWrapper)}>
+                    {Object.keys(favorites).map((planetId, index) => {
+                        return (
+                            <Favorite key={planetId} planet={planets[parseInt(planetId)]} onInteraction={toggleModalEnabled}/>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
+            <ConfirmationModal onConfirm={deleteFavorite} onCancel={toggleModalEnabled} isOpen={modalEnabled}/>
+        </React.Fragment>
     );
 };
 

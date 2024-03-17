@@ -9,9 +9,10 @@ import {TranslationsContext} from "../../providers/TranslationProvider";
 
 interface FavoriteProps {
     planet: Planet;
+    onInteraction: Function;
 }
 
-const Favorite = ({planet}: FavoriteProps) => {
+const Favorite: React.FC<FavoriteProps> = ({planet, onInteraction}) => {
     const {theme} = useContext(ThemeContext),
         translations = useContext(TranslationsContext),
         styles = StyleSheet.create({
@@ -68,7 +69,7 @@ const Favorite = ({planet}: FavoriteProps) => {
         <div className={css(styles.container)}>
             <div className={css(styles.titleBox)}>
                 <h2 className={css(styles.title)}>{planet.name}</h2>
-                <CloseIcon/>
+                <CloseIcon onInteraction={onInteraction}/>
                 <h3 className={css(styles.subtitle)}>{planet.climate}</h3>
             </div>
             <img className={css(styles.image)} src={favoriteImage} alt={translations.getMessage("favorite")}/>

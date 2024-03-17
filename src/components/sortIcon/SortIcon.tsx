@@ -5,7 +5,7 @@ interface SortIconProps {
     upsideDown?: boolean | null;
 }
 
-const SortIcon = ({upsideDown}: SortIconProps) => {
+const SortIcon: React.FC<SortIconProps> = ({upsideDown}) => {
     const styles = StyleSheet.create({
         svg: {
             paddingLeft: 5,

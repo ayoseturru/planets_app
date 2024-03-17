@@ -11,7 +11,7 @@ interface NavProps {
     extraStyle: StyleDeclarationValue;
 }
 
-const Nav = ({extraStyle}: NavProps) => {
+const Nav: React.FC<NavProps> = ({extraStyle}) => {
     const {theme} = useContext(ThemeContext),
         location = useLocation(),
         translations = useContext(TranslationsContext),

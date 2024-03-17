@@ -29,6 +29,21 @@
     },
     "favorites": {
       "border": "#EBEBEB"
+    },
+    "favorite": {
+      "border": "#F2F2F2",
+      "mainText": "#333333",
+      "secondaryText": "#828282",
+      "boxShadow": "rgba(0, 0, 0, 0.1)"
+    },
+    "modal": {
+      "overlayBackground": "rgba(0, 0, 0, 0.6)",
+      "background": "#FFFFFF",
+      "removeBackground": "#F2D7D7",
+      "titleText": "#BE2F2F",
+      "descriptionText": "#333333",
+      "cancelText": "#1C5686",
+      "removeText": "#FFFFFF"
     }
   },
   "dark": {
@@ -67,6 +82,15 @@
       "mainText": "#333333",
       "secondaryText": "#828282",
       "boxShadow": "rgba(0, 0, 0, 0.1)"
+    },
+    "modal": {
+      "overlayBackground": "rgba(0, 0, 0, 0.6)",
+      "background": "#FFFFFF",
+      "removeBackground": "#F2D7D7",
+      "titleText": "#BE2F2F",
+      "descriptionText": "#333333",
+      "cancelText": "#1C5686",
+      "removeText": "#FFFFFF"
     }
   }
 }
