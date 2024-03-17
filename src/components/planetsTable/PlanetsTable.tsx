@@ -5,13 +5,12 @@ import {ThemeContext} from "../../providers/ThemeProvider";
 import MediaQueryUtils from "../../utils/MediaQuery";
 import {useDispatch, useSelector} from "react-redux";
 import {PlanetsAppState} from "../../state/reducers/initialState";
-import {PlanetsCollection, PlanetsCollectionSort, sortPlanetsCollection, PlanetsCollectionSortField} from "../../models/PlanetsCollection";
+import {PlanetsCollection, PlanetsCollectionSort, PlanetsCollectionSortField, sortPlanetsCollection} from "../../models/PlanetsCollection";
 import FavoriteIcon from "../favoriteIcon/FavoriteIcon";
 import FavoritesCollection from "../../models/FavoritesCollection";
 import Loader from "../loader/Loader";
 import PlanetsCreator from "../../state/creators/planets.creator";
 import Grid from "../../utils/Grid";
-import {useNavigate} from "react-router-dom";
 import SortIcon from "../sortIcon/SortIcon";
 import {RouterPaths} from "../../pages/Main";
 
@@ -25,7 +24,6 @@ const PlanetsTable = () => {
     const translations = useContext(TranslationsContext),
         planets: PlanetsCollection = useSelector((state: PlanetsAppState) => state.planetsData.planets),
         favorites: FavoritesCollection = useSelector((state: PlanetsAppState) => state.planetsData.favorites),
-        navigate = useNavigate(),
         {theme} = useContext(ThemeContext),
         dispatch = useDispatch(),
         styles = StyleSheet.create({
@@ -95,7 +93,7 @@ const PlanetsTable = () => {
 
     const handleGoToPlanet = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLTableRowElement>, planetId: number): void => {
         if (event.type === "click" || (event.type === "keydown" && (event as React.KeyboardEvent<HTMLTableRowElement>).key === "Enter")) {
-            navigate(RouterPaths.Planet.replace(":planetId", `${planetId}`));
+            window.open(RouterPaths.Planet.replace(":planetId", `${planetId}`), "_blank");
         }
     };
 

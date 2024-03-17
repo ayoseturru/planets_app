@@ -21,7 +21,6 @@ const mockPlanetsData = [
         "gravity": "0.98",
         "url": "https://swapi.dev/api/planets/42/"
     },
-    // Add more planets here
     {
         "name": "Planet 3",
         "climate": "unknown",
@@ -89,35 +88,43 @@ const mockPlanetsData = [
 ];
 
 describe('PlanetTable component', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         const mockFetch = jest.fn(),
             mockFetchResponse = {
                 json: async () => ({results: mockPlanetsData, next: null}),
             };
 
         global.fetch = mockFetch.mockResolvedValue(mockFetchResponse);
+        await waitFor(() => render(<App/>));
     });
 
-
     it('renders the correct number of rows', async () => {
-        await waitFor(() => render(<App/>));
-
         const planetTableRows = screen.queryAllByTestId((id) => id.startsWith(PLANETS_TEST_IDS.Planets));
         expect(planetTableRows.length).toBe(10);
     });
 
-    it('navigates to the correct planet page when a row is clicked', async () => {
-        await waitFor(() => render(<App/>));
-
+    it('opens the correct planet page in a new tab when a row is clicked', async () => {
         const planetTableRows = screen.getAllByTestId((id) => id.startsWith('planet-row_')),
             randomIndex = Math.floor(Math.random() * planetTableRows.length),
             randomPlanetRow = planetTableRows[randomIndex];
 
         const planetUrl = mockPlanetsData[randomIndex].url,
-            planetId = planetUrl.split('/').slice(-2)[0];
+            planetId = planetUrl.split('/').slice(-2)[0],
+            mockWindowOpen = jest.spyOn(window, 'open').mockReturnValue(null);
 
         fireEvent.click(randomPlanetRow);
+        expect(mockWindowOpen).toHaveBeenCalledWith(`${RouterPaths.Planet.replace(":planetId", planetId)}`, '_blank');
+        mockWindowOpen.mockRestore();
+    });
 
-        expect(window.location.pathname).toMatch(new RegExp(`${RouterPaths.Planet.replace(":planetId", planetId)}`));
+    it('navigates to the correct planet page when the URL is typed directly', async () => {
+        const randomPlanetData = mockPlanetsData[Math.floor(Math.random() * mockPlanetsData.length)],
+            planetId = randomPlanetData.url.split('/').slice(-2)[0],
+            planetPageUrl = `${RouterPaths.Planet.replace(":planetId", planetId)}`;
+
+        window.history.pushState({}, 'Test page', planetPageUrl);
+        await waitFor(() => render(<App/>));
+
+        expect(screen.getByRole('heading', {name: randomPlanetData.name})).toBeInTheDocument();
     });
 });
