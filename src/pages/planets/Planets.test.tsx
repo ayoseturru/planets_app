@@ -1,8 +1,8 @@
 import React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
-import App from '../../../App';
-import {PLANETS_TEST_IDS} from "../../planetsTable/PlanetsTable";
+import App from '../../App';
 import {RouterPaths} from "../Main";
+import {PLANETS_TEST_IDS} from "../../components/planetsTable/PlanetsTable";
 
 const mockPlanetsData = [
     {

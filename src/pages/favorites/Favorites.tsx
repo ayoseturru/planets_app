@@ -1,15 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {css, StyleSheet} from "aphrodite";
-import Grid from "../../../utils/Grid";
-import {ThemeContext} from "../../../providers/ThemeProvider";
-import {TranslationsContext} from "../../../providers/TranslationProvider";
-import FavoritesCollection from "../../../models/FavoritesCollection";
 import {useDispatch, useSelector} from "react-redux";
-import {PlanetsAppState} from "../../../state/reducers/initialState";
-import Favorite from "../../favorite/Favorite";
-import {PlanetsCollection} from "../../../models/PlanetsCollection";
-import ConfirmationModal from "../../cconfirmationModal/ConfirmationModal";
-import PlanetsCreator from "../../../../src/state/creators/planets.creator";
+import {ThemeContext} from "../../providers/ThemeProvider";
+import {TranslationsContext} from "../../providers/TranslationProvider";
+import FavoritesCollection from "../../models/FavoritesCollection";
+import {PlanetsAppState} from "../../state/reducers/initialState";
+import {PlanetsCollection} from "../../models/PlanetsCollection";
+import Grid from "../../utils/Grid";
+import PlanetsCreator from "../../state/creators/planets.creator";
+import Favorite from "../../components/favorite/Favorite";
+import ConfirmationModal from "../../components/cconfirmationModal/ConfirmationModal";
 
 const Favorites = () => {
     const {theme} = useContext(ThemeContext),

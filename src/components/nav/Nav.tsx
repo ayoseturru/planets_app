@@ -4,7 +4,7 @@ import {Link, useLocation} from 'react-router-dom';
 import {ThemeContext} from "../../providers/ThemeProvider";
 import Grid from "../../utils/Grid";
 import {TranslationsContext} from "../../providers/TranslationProvider";
-import {RouterPaths} from "../pages/Main";
+import {RouterPaths} from "../../pages/Main";
 import MediaQueryUtils from "../../utils/MediaQuery";
 
 interface NavProps {

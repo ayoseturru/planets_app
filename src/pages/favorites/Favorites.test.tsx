@@ -1,8 +1,8 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import App from "../../../App";
 import {RouterPaths} from "../Main";
 import React from "react";
-import ReferenceLanguageFile from "../../../_locales/en.json";
+import ReferenceLanguageFile from "../../_locales/en.json";
+import App from "../../App";
 
 const expectedDocumentTitle: string = ReferenceLanguageFile.favorites;
 

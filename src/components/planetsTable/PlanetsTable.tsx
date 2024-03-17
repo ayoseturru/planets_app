@@ -12,8 +12,8 @@ import Loader from "../loader/Loader";
 import PlanetsCreator from "../../state/creators/planets.creator";
 import Grid from "../../utils/Grid";
 import {useNavigate} from "react-router-dom";
-import {RouterPaths} from "../pages/Main";
 import SortIcon from "../sortIcon/SortIcon";
+import {RouterPaths} from "../../pages/Main";
 
 export const PLANETS_TEST_IDS = {
     Planets: "planet-row_"

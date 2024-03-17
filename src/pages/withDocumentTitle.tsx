@@ -1,5 +1,5 @@
 import React, {useEffect, ComponentType} from 'react';
-import Dom from "../../utils/DOM";
+import Dom from "../utils/DOM";
 
 const withDocumentTitle = <P extends object>(WrappedComponent: ComponentType<P>, title: string) => {
     const WithDocumentTitle: React.FC<P> = (props) => {

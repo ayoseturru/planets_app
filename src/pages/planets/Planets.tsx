@@ -1,14 +1,14 @@
 import React from 'react';
-import PlanetsTable from "../../planetsTable/PlanetsTable";
 import {css, StyleSheet} from "aphrodite";
-import Grid from "../../../utils/Grid";
-import Planet from "../../planet/Planet";
+import PlanetsTable from "../../components/planetsTable/PlanetsTable";
+import Planet from "../../components/planet/Planet";
+import Grid from "../../utils/Grid";
 
 const Planets = () => {
     const styles = StyleSheet.create({
         container: {
             ...Grid.define("max-content", "auto max-content")
-        },
+        }
     });
 
     return (

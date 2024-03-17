@@ -1,7 +1,7 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import App from "../../App";
-import {RouterPaths} from "../pages/Main";
+import {RouterPaths} from "../../pages/Main";
 
 describe('Nav component', () => {
     it('should navigate properly', () => {
