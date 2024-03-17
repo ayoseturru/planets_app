@@ -15,6 +15,7 @@ import PlanetsCreator from "../../state/creators/planets.creator";
 import {Simulate} from "react-dom/test-utils";
 import {PlanetsAppState} from "../../state/reducers/initialState";
 import error = Simulate.error;
+import Time from "../../utils/Time";
 
 type PageLinks = {
     Planets: string;
@@ -50,7 +51,7 @@ const Main = ({planetsService}: MainComponentProps) => {
             pageContent: Grid.setRowCol(1, 2)
         }),
         currentTtl: number = useSelector((state: PlanetsAppState) => state.planetsData.ttl),
-        [ttlInvalid, setTtlInvalid] = useState((new Date().getTime()) >= currentTtl);
+        [ttlInvalid, setTtlInvalid] = useState(Time.getTimeInMs() >= currentTtl);
 
     const setPlanets = (serverResponse: PlanetsServiceResponse): void => {
         dispatch(PlanetsCreator.setPlanets(serverResponse.planets, serverResponse.ttl));
@@ -77,7 +78,7 @@ const Main = ({planetsService}: MainComponentProps) => {
         // If it was set to zero, it was hit on the above useEffect
         if (currentTtl > 0) {
             clearTimeout(timer);
-            setTimeout(() => setTtlInvalid(true), Math.max(currentTtl - (new Date().getTime()), 0));
+            setTimeout(() => setTtlInvalid(true), Math.max(currentTtl - Time.getTimeInMs(), 0));
         }
     }, [ttlInvalid, currentTtl]);
 

@@ -2,6 +2,7 @@ import InitialState, {PlanetsDataState} from "./initialState";
 import PlanetsActions from "../actions/planets.actions";
 import {PlanetsCollection} from "../../models/PlanetsCollection";
 import Storage from "../../utils/Storage";
+import Time from "../../utils/Time";
 
 export interface PlanetsActionType {
     type: keyof typeof PlanetsActions;
@@ -17,7 +18,7 @@ const PlanetsReducer = (state: PlanetsDataState = defaultState, action: PlanetsA
         case PlanetsActions.SET_PLANETS:
             return {
                 ...state,
-                ttl: action.ttl! + (new Date()).getTime(),
+                ttl: action.ttl! + Time.getTimeInMs(),
                 planets: {
                     ...state.planets,
                     ...action.planets
