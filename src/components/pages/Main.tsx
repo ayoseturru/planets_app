@@ -54,7 +54,7 @@ const Main: React.FC<MainComponentProps> = ({planetsService}) => {
         [ttlInvalid, setTtlInvalid] = useState(Time.getTimeInMs() >= currentTtl);
 
     const setPlanets = (serverResponse: PlanetsServiceResponse): void => {
-        dispatch(PlanetsCreator.setPlanets(serverResponse.planets, serverResponse.ttl));
+        dispatch(PlanetsCreator.setPlanets(serverResponse.planets, serverResponse.ttl + Time.getTimeInMs()));
     };
 
     const setPlanetsCallback = useCallback(setPlanets, [dispatch]);

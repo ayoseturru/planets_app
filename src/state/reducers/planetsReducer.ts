@@ -18,7 +18,7 @@ const PlanetsReducer = (state: PlanetsDataState = defaultState, action: PlanetsA
         case PlanetsActions.SET_PLANETS:
             return {
                 ...state,
-                ttl: action.ttl! + Time.getTimeInMs(),
+                ttl: action.ttl!,
                 planets: {
                     ...state.planets,
                     ...action.planets
