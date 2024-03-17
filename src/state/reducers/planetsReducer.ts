@@ -32,6 +32,13 @@ const PlanetsReducer = (state: PlanetsDataState = defaultState, action: PlanetsA
                     [action.planetId!]: true
                 }
             };
+        case PlanetsActions.REMOVE_FROM_FAVORITES:
+            const {[action.planetId!]: removedKey, ...restFavorites} = state.favorites;
+
+            return {
+                ...state,
+                favorites: restFavorites
+            };
         default:
             return state;
     }

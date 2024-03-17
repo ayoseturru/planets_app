@@ -105,8 +105,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({isOpen, onConfirm,
                 </h2>
                 <p className={css(styles.description)}>{translations.getMessage("removeFavoriteDesc")}</p>
                 <div className={css(styles.buttons)}>
-                    <button className={css(styles.cancelButton, styles.buttonsCommon)} onClick={onConfirm} aria-label={confirmMessage}>{confirmMessage}</button>
-                    <button className={css(styles.removeButton, styles.buttonsCommon)} onClick={onCancel} aria-label={cancelMessage}>{cancelMessage}</button>
+                    <button className={css(styles.cancelButton, styles.buttonsCommon)} onClick={onCancel} aria-label={confirmMessage}>{cancelMessage}</button>
+                    <button className={css(styles.removeButton, styles.buttonsCommon)} onClick={onConfirm} aria-label={cancelMessage}>{confirmMessage}</button>
                 </div>
             </div>
         </div>
