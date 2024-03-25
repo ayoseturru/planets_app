@@ -1,8 +1,8 @@
 import React from 'react';
 import {css, StyleSheet} from "aphrodite";
 import PlanetsTable from "../../components/planetsTable/PlanetsTable";
-import Planet from "../../components/planet/Planet";
 import Grid from "../../utils/Grid";
+import {Outlet} from "react-router-dom";
 
 const Planets = () => {
     const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const Planets = () => {
     return (
         <div className={css(styles.container)}>
             <PlanetsTable/>
-            <Planet/>
+            <Outlet/>
         </div>
     );
 };

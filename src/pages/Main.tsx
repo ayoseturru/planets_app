@@ -15,6 +15,7 @@ import PlanetsCreator from "../state/creators/planets.creator";
 import Nav from "../components/nav/Nav";
 import {TranslationsContext} from "../providers/TranslationProvider";
 import Logger from "../utils/Logger";
+import Planet from "../components/planet/Planet";
 import error = Simulate.error;
 
 type PageLinks = {
@@ -93,8 +94,9 @@ const Main: React.FC<MainComponentProps> = ({planetsService}) => {
                     <Nav extraStyle={styles.nav}/>
                     <div className={css(styles.pageContent)}>
                         <Routes>
-                            <Route path={RouterPaths.Planets} element={<PlanetsPage/>}/>
-                            <Route path={RouterPaths.Planet} element={<PlanetsPage/>}/>
+                            <Route path={RouterPaths.Planets} element={<PlanetsPage/>}>
+                                <Route path={RouterPaths.Planet} element={<Planet/>}/>
+                            </Route>
                             <Route path={RouterPaths.Favorites} element={<FavoritesPage/>}/>
                             <Route path="*" element={<Navigate to={RouterPaths.Planets}/>}/>
                         </Routes>
